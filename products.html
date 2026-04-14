@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produk — GadgetHub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== PRODUCTS PAGE ===== */
+
+    .products-hero {
+      padding: 100px 48px 40px;
+      background: linear-gradient(180deg, var(--surface) 0%, transparent 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .products-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .products-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+    }
+    .products-hero p { color: var(--text2); margin-top: 8px; font-size: 0.95rem; }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      min-width: 280px;
+      transition: border-color 0.2s;
+    }
+    .search-bar:focus-within { border-color: var(--accent); }
+    .search-icon { padding: 0 14px; color: var(--text3); font-size: 1rem; }
+    .search-input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 12px 0;
+      flex: 1;
+    }
+    .search-input::placeholder { color: var(--text3); }
+
+    /* FILTER BAR */
+    .filter-bar {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      padding: 0 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-label { font-size: 0.8rem; color: var(--text3); font-weight: 600; white-space: nowrap; }
+
+    /* PRODUCT GRID */
+    .products-main {
+      max-width: 1200px;
+      margin: 32px auto 0;
+      padding: 0 48px 80px;
+    }
+
+    .products-count {
+      font-size: 0.875rem;
+      color: var(--text3);
+      margin-bottom: 24px;
+    }
+    .products-count strong { color: var(--text); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* PRODUCT CARD */
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      animation: fadeInUp 0.5s ease both;
+    }
+    .product-card:hover {
+      border-color: rgba(0,229,255,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,229,255,0.1);
+    }
+
+    .product-card-badges {
+      position: absolute;
+      top: 12px; left: 12px;
+      display: flex;
+      gap: 6px;
+      z-index: 1;
+    }
+
+    .product-image {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
+    }
+
+    .product-card-body { padding: 20px; }
+
+    .product-brand {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .product-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .product-specs-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .spec-tag {
+      font-size: 0.7rem;
+      color: var(--text3);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .product-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .product-original-price {
+      font-size: 0.8rem;
+      color: var(--text3);
+      text-decoration: line-through;
+    }
+
+    .product-status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .product-sales {
+      font-size: 0.75rem;
+      color: var(--text3);
+    }
+
+    .product-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-detail {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .btn-detail:hover { border-color: var(--accent); color: var(--accent); }
+
+    .btn-order-card {
+      flex: 2;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-order-card:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-order-card:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text2);
+    }
+    .empty-icon { font-size: 4rem; margin-bottom: 16px; }
+    .empty-title { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+
+    /* ===== PRODUCT DETAIL MODAL ===== */
+    .product-modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .product-modal-visual {
+      background: var(--surface2);
+      border-radius: var(--radius);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+      border: 1px solid var(--border);
+      position: sticky;
+      top: 24px;
+    }
+
+    .product-modal-info {}
+
+    .product-modal-header {
+      margin-bottom: 20px;
+    }
+
+    .product-modal-brand {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .product-modal-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 6px 0;
+    }
+
+    .product-modal-id {
+      font-size: 0.75rem;
+      color: var(--text3);
+      font-family: monospace;
+    }
+
+    .product-modal-price-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .price-main {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .price-original {
+      font-size: 0.9rem;
+      color: var(--text3);
+      text-decoration: line-through;
+      margin-left: 8px;
+    }
+
+    .price-save {
+      font-size: 0.8rem;
+      color: var(--success);
+      margin-top: 4px;
+    }
+
+    .modal-desc {
+      color: var(--text2);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .specs-table {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .spec-row {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { color: var(--text3); min-width: 100px; flex-shrink: 0; }
+    .spec-val { color: var(--text); font-weight: 500; }
+
+    .modal-order-section {}
+    .modal-order-section .btn-wa { margin-top: 8px; }
+
+    @media (max-width: 640px) {
+      .product-modal-grid { grid-template-columns: 1fr; }
+      .product-modal-visual { font-size: 5rem; height: 200px; }
+      .products-hero { padding: 100px 20px 32px; }
+      .filter-bar { padding: 0 20px; }
+      .products-main { padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">📱</div>
+    Gadget<span>Hub</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Beranda</a></li>
+    <li><a href="products.html" class="active">Produk</a></li>
+    <li><a href="index.html#about">Tentang Kami</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn btn-primary" id="nav-login-btn" onclick="openLoginModal()">Masuk</button>
+    <div class="user-avatar-wrap" id="nav-user-wrap" style="display:none; position:relative; align-items:center; gap:8px;">
+      <span id="nav-user-name" style="font-size:0.875rem; color:var(--text2);"></span>
+      <div class="user-avatar" id="nav-avatar" onclick="toggleDropdown()">
+        <span id="nav-user-initial">U</span>
+      </div>
+      <div class="user-dropdown" id="user-dropdown">
+        <a href="index.html" class="dropdown-item">🏠 Beranda</a>
+        <div id="admin-link" style="display:none"><a href="admin.html" class="dropdown-item">⚙️ Dashboard Admin</a></div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item danger" onclick="logout()">🚪 Logout</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="products-hero">
+  <div class="products-hero-inner">
+    <div>
+      <h1>Semua <span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Produk</span></h1>
+      <p>Temukan smartphone terbaik untuk kebutuhanmu</p>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="search-input" placeholder="Cari smartphone...">
+    </div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Brand:</span>
+  <button class="chip active" onclick="filterBrand('all', this)">Semua</button>
+  <button class="chip" onclick="filterBrand('Apple', this)">Apple</button>
+  <button class="chip" onclick="filterBrand('Samsung', this)">Samsung</button>
+  <button class="chip" onclick="filterBrand('Xiaomi', this)">Xiaomi</button>
+  <button class="chip" onclick="filterBrand('OPPO', this)">OPPO</button>
+  <button class="chip" onclick="filterBrand('Vivo', this)">Vivo</button>
+  <button class="chip" onclick="filterBrand('Google', this)">Google</button>
+
+  <span class="filter-label" style="margin-left:16px;">Status:</span>
+  <button class="chip active" id="filter-status-all" onclick="filterStatus('all', this)">Semua</button>
+  <button class="chip" onclick="filterStatus('ready', this)">Ready Stock</button>
+  <button class="chip" onclick="filterStatus('po', this)">Pre-Order</button>
+</div>
+
+<!-- MAIN PRODUCTS -->
+<main class="products-main">
+  <div class="products-count" id="products-count"></div>
+  <div class="products-grid" id="products-grid"></div>
+</main>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="modal-product">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2>Detail Produk</h2>
+      <button class="modal-close" onclick="closeModal('modal-product')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="product-modal-grid" id="product-modal-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="auth-modal-title">Masuk ke GadgetHub</h2>
+      <button class="modal-close" onclick="closeModal('modal-login')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; gap:8px; margin-bottom:24px; background:var(--surface2); padding:4px; border-radius:var(--radius-sm);">
+        <button class="btn" id="tab-login" onclick="switchTab('login')" style="flex:1;justify-content:center;background:var(--surface3);color:var(--text);padding:10px;">Masuk</button>
+        <button class="btn" id="tab-register" onclick="switchTab('register')" style="flex:1;justify-content:center;background:transparent;color:var(--text2);padding:10px;">Daftar</button>
+      </div>
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="login-email" class="form-input" placeholder="email@kamu.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Masuk →</button>
+        <div style="margin-top:16px; padding:12px; background:var(--surface2); border-radius:var(--radius-sm); font-size:0.8rem; color:var(--text2);">
+          <strong style="color:var(--text);">Demo:</strong> admin@gadgethub.id / admin123 | budi@email.com / user123
+        </div>
+      </form>
+      <form id="register-form" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap</label>
+          <input type="text" id="reg-name" class="form-input" placeholder="Nama Lengkap" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="email@kamu.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="Min. 6 karakter" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Buat Akun →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+<script>
+  let currentBrand = 'all';
+  let currentStatus = 'all';
+  let searchQuery = '';
+
+  function toggleDropdown() {
+    document.getElementById('user-dropdown').classList.toggle('open');
+  }
+
+  function switchTab(tab) {
+    const loginForm = document.getElementById('login-form');
+    const regForm = document.getElementById('register-form');
+    const tabLogin = document.getElementById('tab-login');
+    const tabReg = document.getElementById('tab-register');
+    const title = document.getElementById('auth-modal-title');
+    if (tab === 'login') {
+      loginForm.style.display = ''; regForm.style.display = 'none';
+      tabLogin.style.background = 'var(--surface3)'; tabLogin.style.color = 'var(--text)';
+      tabReg.style.background = 'transparent'; tabReg.style.color = 'var(--text2)';
+      title.textContent = 'Masuk ke GadgetHub';
+    } else {
+      loginForm.style.display = 'none'; regForm.style.display = '';
+      tabReg.style.background = 'var(--surface3)'; tabReg.style.color = 'var(--text)';
+      tabLogin.style.background = 'transparent'; tabLogin.style.color = 'var(--text2)';
+      title.textContent = 'Buat Akun Baru';
+    }
+  }
+
+  function renderProducts() {
+    const grid = document.getElementById('products-grid');
+    const countEl = document.getElementById('products-count');
+    let filtered = GH.products.filter(p => {
+      const matchBrand = currentBrand === 'all' || p.brand === currentBrand;
+      const matchStatus = currentStatus === 'all' || p.status === currentStatus;
+      const matchSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery) || p.brand.toLowerCase().includes(searchQuery);
+      return matchBrand && matchStatus && matchSearch;
+    });
+
+    countEl.innerHTML = `Menampilkan <strong>${filtered.length}</strong> produk`;
+
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">Produk tidak ditemukan</div>
+        <p>Coba ubah filter atau kata kunci pencarian</p>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = filtered.map((p, i) => {
+      const isDiscounted = p.discount > 0;
+      const isSoldOut = p.status === 'sold';
+      return `
+      <div class="product-card" style="animation-delay:${i * 0.05}s">
+        <div class="product-card-badges">
+          ${p.isNew ? '<span class="badge badge-new">NEW</span>' : ''}
+          ${isDiscounted ? `<span class="badge badge-sale">-${p.discount}%</span>` : ''}
+          ${p.status === 'po' ? '<span class="badge badge-po">PO</span>' : ''}
+        </div>
+        <div class="product-image" style="background:${p.color || 'var(--surface2)'}">
+          ${p.image && (p.image.startsWith('http') || p.image.startsWith('/')) ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">` : p.image}
+        </div>
+        <div class="product-card-body">
+          <div class="product-brand">${p.brand}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-specs-preview">
+            <span class="spec-tag">${p.specs.ram} RAM</span>
+            <span class="spec-tag">${p.specs.storage}</span>
+            <span class="spec-tag">${p.specs.prosesor.split(' ').slice(0,3).join(' ')}</span>
+          </div>
+          <div class="product-price-row">
+            <span class="product-price">${formatRp(p.price)}</span>
+            ${isDiscounted ? `<span class="product-original-price">${formatRp(p.originalPrice)}</span>` : ''}
+          </div>
+          <div class="product-status-row">
+            <span class="badge ${p.status === 'ready' ? 'badge-ready' : p.status === 'po' ? 'badge-po' : 'badge-sold'}">
+              ${p.status === 'ready' ? '✅ Ready' : p.status === 'po' ? '⏳ Pre-Order' : '❌ Sold Out'}
+            </span>
+            <span class="product-sales">🔥 ${p.sales || 0} terjual</span>
+          </div>
+          <div class="product-card-actions">
+            <button class="btn-detail" onclick="openProductDetail('${p.id}')">Detail</button>
+            <button class="btn-order-card" onclick="orderViaWA('${p.id}')" ${isSoldOut ? 'disabled' : ''}>
+              💬 Pesan WA
+            </button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function filterBrand(brand, el) {
+    currentBrand = brand;
+    document.querySelectorAll('.filter-bar .chip').forEach(c => {
+      if (c.textContent.includes('Semua') && c.id !== 'filter-status-all') return;
+      if (!c.id) c.classList.remove('active');
+    });
+    document.querySelectorAll('.filter-bar .chip').forEach(c => c.classList.remove('active'));
+
+    // Reapply status filter active
+    document.querySelectorAll('.filter-bar .chip').forEach(c => {
+      if ((brand === 'all' && c.textContent === 'Semua') ||
+          c.textContent === brand) {
+        // check if it's a brand chip vs status chip
+      }
+    });
+    el.classList.add('active');
+    renderProducts();
+  }
+
+  function filterStatus(status, el) {
+    currentStatus = status;
+    // Remove active from all status chips
+    el.closest('.filter-bar').querySelectorAll('.chip').forEach(c => {
+      const t = c.textContent.trim();
+      if (t === 'Semua' || t === 'Ready Stock' || t === 'Pre-Order') c.classList.remove('active');
+    });
+    el.classList.add('active');
+    renderProducts();
+  }
+
+  let currentImageSlideIndex = 0;
+
+  function openProductDetail(id) {
+    const p = GH.products.find(pr => pr.id === id);
+    if (!p) return;
+    currentImageSlideIndex = 0;
+    const isDiscounted = p.discount > 0;
+    const saving = p.originalPrice - p.price;
+    const images = p.images && p.images.length > 0 ? p.images : [p.image];
+    const hasVideo = p.videoUrl && p.videoUrl.trim() !== '';
+    
+    const content = document.getElementById('product-modal-content');
+    
+    let visualHtml = `
+      <div class="product-modal-visual-wrapper">
+        <div class="product-modal-visual" id="product-visual" style="background:${p.color || 'var(--surface2)'}">
+          <div class="carousel-container">
+            <div class="carousel-slide active" id="carousel-0" style="width:100%;height:100%;">
+              ${images[0].startsWith('http') ? `<img src="${images[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">` : images[0]}
+            </div>
+            ${images.slice(1).map((img, i) => `
+              <div class="carousel-slide" id="carousel-${i+1}" style="width:100%;height:100%;">
+                ${img.startsWith('http') ? `<img src="${img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">` : img}
+              </div>
+            `).join('')}
+          </div>
+          ${images.length > 1 ? `
+            <button class="carousel-btn carousel-prev" onclick="slideImage('${p.id}', -1)">❮</button>
+            <button class="carousel-btn carousel-next" onclick="slideImage('${p.id}', 1)">❯</button>
+            <div class="carousel-dots">
+              ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide('${p.id}', ${i})"></span>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+        ${hasVideo ? `
+          <div class="product-modal-video" style="background:var(--surface2);border-radius:var(--radius);margin-top:20px;overflow:hidden;border:1px solid var(--border);">
+            ${p.videoUrl.includes('youtube.com') || p.videoUrl.includes('youtu.be') ? 
+              (() => {
+                let videoId = '';
+                if (p.videoUrl.includes('youtube.com')) {
+                  videoId = new URL(p.videoUrl).searchParams.get('v');
+                } else {
+                  videoId = p.videoUrl.split('/').pop();
+                }
+                return `<iframe width="100%" height="300" src="https://www.youtube.com/embed/${videoId}" 
+                  style="border:none;border-radius:4px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+              })()
+              : `<video width="100%" height="300" controls style="background:var(--surface3);border-radius:4px;">
+                  <source src="${p.videoUrl}" type="video/mp4">
+                  Video tidak dapat ditampilkan
+                </video>`
+            }
+          </div>
+        ` : ''}
+      </div>
+    `;
+    
+    content.innerHTML = `
+      ${visualHtml}
+      <div class="product-modal-info">
+        <div class="product-modal-header">
+          <div class="product-modal-brand">${p.brand}</div>
+          <h3 class="product-modal-name">${p.name}</h3>
+          <div class="product-modal-id">Kode: ${p.id}</div>
+          <div style="margin-top:10px; display:flex;gap:8px;flex-wrap:wrap;">
+            ${p.isNew ? '<span class="badge badge-new">NEW</span>' : ''}
+            <span class="badge ${p.status === 'ready' ? 'badge-ready' : p.status === 'po' ? 'badge-po' : 'badge-sold'}">
+              ${p.status === 'ready' ? '✅ Ready Stock' : p.status === 'po' ? '⏳ Pre-Order' : '❌ Sold Out'}
+            </span>
+            ${isDiscounted ? `<span class="badge badge-sale">Diskon ${p.discount}%</span>` : ''}
+          </div>
+        </div>
+
+        <div class="product-modal-price-box">
+          <span class="price-main">${formatRp(p.price)}</span>
+          ${isDiscounted ? `<span class="price-original">${formatRp(p.originalPrice)}</span>` : ''}
+          ${isDiscounted ? `<div class="price-save">💰 Hemat ${formatRp(saving)}</div>` : ''}
+        </div>
+
+        <p class="modal-desc">${p.desc}</p>
+
+        <div class="divider"></div>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Spesifikasi</div>
+        <div class="specs-table">
+          ${Object.entries(p.specs).map(([k, v]) => `
+            <div class="spec-row">
+              <span class="spec-key">${k.charAt(0).toUpperCase() + k.slice(1)}</span>
+              <span class="spec-val">${v}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="modal-order-section">
+          ${p.status !== 'sold' ? `
+            <button class="btn btn-wa" onclick="orderViaWA('${p.id}')">
+              💬 Pesan via WhatsApp
+            </button>
+            <p style="font-size:0.75rem;color:var(--text3);text-align:center;margin-top:8px;">
+              Template pesan otomatis akan terisi dengan kode & harga produk
+            </p>
+          ` : `
+            <div style="text-align:center;padding:16px;background:rgba(255,61,107,0.08);border:1px solid rgba(255,61,107,0.2);border-radius:var(--radius-sm);">
+              <span style="color:var(--accent3);">Produk ini sedang tidak tersedia</span>
+            </div>
+          `}
+        </div>
+      </div>
+    `;
+    openModal('modal-product');
+  }
+
+  function slideImage(productId, direction) {
+    const p = GH.products.find(pr => pr.id === productId);
+    if (!p || !p.images || p.images.length <= 1) return;
+    
+    const images = p.images;
+    currentImageSlideIndex = (currentImageSlideIndex + direction + images.length) % images.length;
+    updateCarousel();
+  }
+
+  function goToSlide(productId, index) {
+    const p = GH.products.find(pr => pr.id === productId);
+    if (!p || !p.images) return;
+    currentImageSlideIndex = index;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    document.querySelectorAll('.carousel-slide').forEach((slide, i) => {
+      slide.classList.toggle('active', i === currentImageSlideIndex);
+    });
+    document.querySelectorAll('.dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentImageSlideIndex);
+    });
+  }
+
+  // Search
+  document.getElementById('search-input').addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    renderProducts();
+  });
+
+  // Init after app.js loads
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check admin link
+    if (GH.currentUser?.role === 'admin') {
+      const al = document.getElementById('admin-link');
+      if (al) al.style.display = '';
+    }
+    renderProducts();
+  });
+
+  // Re-render after login
+  const origUpdateNav = updateNavAuth;
+  window.addEventListener('gh_auth', () => {
+    renderProducts();
+    if (GH.currentUser?.role === 'admin') {
+      const al = document.getElementById('admin-link');
+      if (al) al.style.display = '';
+    }
+  });
+</script>
+</body>
+</html>

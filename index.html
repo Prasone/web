@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GadgetHub — Premium Smartphone Marketplace</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== HOME PAGE ===== */
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 48px 80px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .hero-orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(0,229,255,0.15), transparent);
+      top: -100px; right: -100px;
+    }
+    .hero-orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(123,47,255,0.12), transparent);
+      bottom: -50px; left: 200px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 80px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(0,229,255,0.1);
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: fadeInDown 0.5s ease;
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 24px;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, var(--accent3) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+    }
+
+    .hero-desc {
+      color: var(--text2);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+    }
+    .hero-stat-item {}
+    .hero-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .hero-stat-label {
+      font-size: 0.8rem;
+      color: var(--text3);
+      margin-top: 2px;
+    }
+
+    /* HERO VISUAL */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+
+    .phone-showcase {
+      position: relative;
+      width: 280px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .phone-body {
+      width: 280px;
+      height: 560px;
+      background: linear-gradient(145deg, #1e1e2e, #2a2a3e);
+      border-radius: 44px;
+      border: 2px solid rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 40px 80px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(255,255,255,0.1),
+        0 0 0 1px rgba(0,229,255,0.1);
+    }
+
+    .phone-screen {
+      position: absolute;
+      inset: 12px;
+      background: linear-gradient(160deg, #0a0a1a 0%, #111128 100%);
+      border-radius: 34px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-notch {
+      width: 100px; height: 28px;
+      background: #0a0a1a;
+      border-radius: 0 0 16px 16px;
+      margin: 0 auto;
+      z-index: 2;
+    }
+
+    .phone-content {
+      flex: 1;
+      padding: 8px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phone-product-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    .phone-product-emoji { font-size: 2rem; width: 44px; text-align: center; }
+
+    .phone-product-info { flex: 1; }
+    .phone-product-name { font-size: 0.7rem; font-weight: 600; color: var(--text); line-height: 1.2; }
+    .phone-product-price { font-size: 0.65rem; color: var(--accent); margin-top: 2px; font-weight: 600; }
+
+    .phone-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+    }
+    .phone-bar.accent { background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 60%; }
+    .phone-bar.short { width: 40%; }
+
+    .phone-glow {
+      position: absolute;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(0,229,255,0.2), transparent);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+
+    .badge-float {
+      position: absolute;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .badge-float-1 {
+      top: 60px; left: -80px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .badge-float-2 {
+      bottom: 80px; right: -70px;
+      animation: float 3.5s ease-in-out infinite 0.5s;
+    }
+    .badge-float-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      padding: 100px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-image-stack {
+      position: relative;
+      height: 480px;
+    }
+
+    .about-card {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-card-main {
+      top: 0; left: 0;
+      right: 60px;
+      bottom: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(160deg, var(--surface) 0%, #0d0d1a 100%);
+      overflow: hidden;
+    }
+
+    .about-card-main-bg {
+      position: absolute;
+      inset: 0;
+      font-size: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .about-card-secondary {
+      bottom: 0; right: 0;
+      width: 220px;
+      background: var(--surface2);
+    }
+
+    .about-card-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(0,229,255,0.1);
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .about-card-h {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .about-card-p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+    .mini-stat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mini-stat:last-child { margin-bottom: 0; }
+    .mini-stat-icon {
+      width: 36px; height: 36px;
+      background: var(--surface3);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .mini-stat-text { font-size: 0.8rem; color: var(--text2); line-height: 1.4; }
+    .mini-stat-text strong { display: block; color: var(--text); font-size: 0.9rem; }
+
+    .about-content {}
+    .about-content p { color: var(--text2); font-size: 0.95rem; line-height: 1.8; margin-bottom: 20px; }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .feature-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+    .feature-text strong { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; }
+    .feature-text span { font-size: 0.8rem; color: var(--text3); }
+
+    /* VIDEO SECTION */
+    .video-section {
+      padding: 80px 48px;
+      background: linear-gradient(180deg, transparent, var(--surface) 20%, var(--surface) 80%, transparent);
+    }
+
+    .video-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .video-header { text-align: center; margin-bottom: 48px; }
+
+    .video-wrap {
+      position: relative;
+      border-radius: calc(var(--radius) * 1.5);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow), var(--glow);
+      background: var(--surface2);
+      aspect-ratio: 16/9;
+    }
+
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: linear-gradient(135deg, var(--surface2), var(--surface3));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,229,255,0.05), rgba(123,47,255,0.05));
+    }
+
+    .play-btn {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 40px rgba(0,229,255,0.3);
+      position: relative;
+      z-index: 1;
+    }
+    .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 60px rgba(0,229,255,0.5); }
+
+    .video-placeholder h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      position: relative; z-index: 1;
+    }
+    .video-placeholder p {
+      color: var(--text2);
+      font-size: 0.875rem;
+      position: relative; z-index: 1;
+    }
+
+    .video-cta {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+      justify-content: center;
+    }
+
+    /* BRANDS */
+    .brands-section {
+      padding: 60px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .brands-label {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+    }
+
+    .brands-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .brand-chip {
+      padding: 10px 24px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--text2);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .brand-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,255,0.05);
+    }
+
+    /* VALUES */
+    .values-section {
+      padding: 80px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .value-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .value-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-4px);
+    }
+    .value-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .value-card:hover::after { opacity: 1; }
+
+    .value-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .value-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .value-desc { color: var(--text2); font-size: 0.875rem; line-height: 1.7; }
+
+    /* CTA SECTION */
+    .cta-section {
+      padding: 80px 48px;
+    }
+    .cta-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) * 2);
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 400px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .cta-inner h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .cta-inner p { color: var(--text2); font-size: 1rem; margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-image-stack { display: none; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .hero, .about-section, .brands-section, .values-section { padding-left: 24px; padding-right: 24px; }
+    }
+
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .feature-list { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">📱</div>
+    Gadget<span>Hub</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Beranda</a></li>
+    <li><a href="products.html">Produk</a></li>
+    <li><a href="#about">Tentang Kami</a></li>
+    <li><a href="#contact">Kontak</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <a href="products.html" class="btn btn-ghost">Lihat Produk</a>
+    <button class="btn btn-primary" id="nav-login-btn" onclick="openLoginModal()">Masuk</button>
+
+    <div class="user-avatar-wrap" id="nav-user-wrap" style="display:none; position:relative; align-items:center; gap:8px;">
+      <span id="nav-user-name" style="font-size:0.875rem; color:var(--text2);"></span>
+      <div class="user-avatar" id="nav-avatar" onclick="toggleDropdown()">
+        <span id="nav-user-initial">U</span>
+      </div>
+      <div class="user-dropdown" id="user-dropdown">
+        <a href="products.html" class="dropdown-item">🛍️ Produk</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-item danger" onclick="logout()">🚪 Logout</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow animate-in">
+        <span class="eyebrow-dot"></span>
+        #1 Marketplace Smartphone di Indonesia
+      </div>
+
+      <h1 class="hero-title animate-in delay-1">
+        Temukan <span class="gradient-text">Smartphone</span><br>
+        Impianmu Disini
+      </h1>
+
+      <p class="hero-desc animate-in delay-2">
+        GadgetHub menghadirkan koleksi smartphone premium terlengkap dengan harga terbaik. 
+        Garansi resmi, pengiriman cepat, dan layanan pelanggan 24/7 siap melayanimu.
+      </p>
+
+      <div class="hero-actions animate-in delay-3">
+        <a href="products.html" class="btn btn-primary btn-lg">🛍️ Belanja Sekarang</a>
+        <a href="#video" class="btn btn-ghost btn-lg">▶ Tonton Video</a>
+      </div>
+
+      <div class="hero-stats animate-in delay-4">
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">500+</div>
+          <div class="hero-stat-label">Produk Tersedia</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">10K+</div>
+          <div class="hero-stat-label">Pelanggan Puas</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Garansi Resmi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO PHONE VISUAL -->
+    <div class="hero-visual">
+      <div class="phone-showcase">
+        <div class="phone-body">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-content">
+              <div class="phone-bar accent" style="height:4px; margin-bottom:8px;"></div>
+              <div style="font-size:0.5rem; color:var(--text3); text-align:center; margin-bottom:8px;">⭐⭐⭐⭐⭐ GadgetHub</div>
+              <div class="phone-product-card" style="animation-delay:0.1s">
+                <div class="phone-product-emoji">📱</div>
+                <div class="phone-product-info">
+                  <div class="phone-product-name">iPhone 15 Pro Max</div>
+                  <div class="phone-product-price">Rp 21.499.000</div>
+                </div>
+              </div>
+              <div class="phone-product-card" style="animation-delay:0.2s">
+                <div class="phone-product-emoji">📲</div>
+                <div class="phone-product-info">
+                  <div class="phone-product-name">Samsung S24 Ultra</div>
+                  <div class="phone-product-price">Rp 19.999.000</div>
+                </div>
+              </div>
+              <div class="phone-product-card" style="animation-delay:0.3s">
+                <div class="phone-product-emoji">🔥</div>
+                <div class="phone-product-info">
+                  <div class="phone-product-name">Xiaomi 14 Ultra</div>
+                  <div class="phone-product-price">Rp 14.999.000</div>
+                </div>
+              </div>
+              <div style="flex:1; display:flex; align-items:flex-end; padding-bottom:4px;">
+                <div style="background:linear-gradient(90deg,var(--accent),var(--accent2)); height:36px; border-radius:10px; flex:1; display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:700;color:#000;">PESAN SEKARANG →</div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-glow"></div>
+        </div>
+      </div>
+
+      <div class="badge-float badge-float-1">
+        <div class="badge-float-num">⚡ Ready</div>
+        <div style="font-size:0.7rem; color:var(--text2);">Stock tersedia</div>
+      </div>
+      <div class="badge-float badge-float-2">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span>💬</span>
+          <span style="font-size:0.7rem; color:var(--text2);">Order via WhatsApp</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section class="brands-section">
+  <p class="brands-label">Brand resmi yang tersedia</p>
+  <div class="brands-row">
+    <div class="brand-chip">Apple</div>
+    <div class="brand-chip">Samsung</div>
+    <div class="brand-chip">Xiaomi</div>
+    <div class="brand-chip">OPPO</div>
+    <div class="brand-chip">Vivo</div>
+    <div class="brand-chip">Google</div>
+    <div class="brand-chip">OnePlus</div>
+    <div class="brand-chip">Realme</div>
+    <div class="brand-chip">Nothing</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-grid">
+    <!-- VISUAL -->
+    <div class="about-visual animate-in">
+      <div class="about-image-stack">
+        <div class="about-card about-card-main">
+          <div class="about-card-main-bg">📱</div>
+          <div class="about-card-tag">Est. 2019</div>
+          <h3 class="about-card-h">5 Tahun Melayani<br>Indonesia</h3>
+          <p class="about-card-p">Dari Jakarta, kami telah melayani ribuan pelanggan di seluruh nusantara dengan standar kualitas terbaik.</p>
+        </div>
+        <div class="about-card about-card-secondary">
+          <div class="mini-stat">
+            <div class="mini-stat-icon">🏆</div>
+            <div class="mini-stat-text">
+              <strong>Top Rated Seller</strong>
+              Rating 4.9/5.0
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-icon">🔐</div>
+            <div class="mini-stat-text">
+              <strong>100% Original</strong>
+              Garansi resmi
+            </div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-icon">🚀</div>
+            <div class="mini-stat-text">
+              <strong>Fast Response</strong>
+              Respon < 5 menit
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEXT -->
+    <div class="about-content">
+      <div class="section-label">Tentang GadgetHub</div>
+      <h2 class="section-title">Toko Smartphone<br>Terpercaya Sejak 2019</h2>
+      <div class="divider"></div>
+      <p>GadgetHub lahir dari passion terhadap teknologi dan keinginan untuk menghadirkan akses produk smartphone premium kepada masyarakat Indonesia dengan harga yang kompetitif.</p>
+      <p>Kami bermitra langsung dengan distributor resmi dari berbagai brand ternama dunia, memastikan setiap produk yang kami jual adalah 100% original dengan garansi resmi Indonesia.</p>
+      <p>Dengan sistem pemesanan berbasis WhatsApp yang mudah dan cepat, belanja smartphone di GadgetHub terasa seperti pesan ke teman yang terpercaya.</p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-text">
+            <strong>Garansi Resmi</strong>
+            <span>Semua produk bergaransi resmi distributor Indonesia</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💬</div>
+          <div class="feature-text">
+            <strong>Order via WA</strong>
+            <span>Proses pemesanan mudah langsung lewat WhatsApp</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🚚</div>
+          <div class="feature-text">
+            <strong>Free Ongkir</strong>
+            <span>Gratis ongkos kirim ke seluruh Indonesia</span>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">↩️</div>
+          <div class="feature-text">
+            <strong>Easy Return</strong>
+            <span>Garansi tukar unit 7 hari jika ada masalah</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="video">
+  <div class="video-container">
+    <div class="video-header animate-in">
+      <div class="section-label" style="text-align:center">Video Profil</div>
+      <h2 class="section-title" style="text-align:center">Kenali Lebih Dekat<br><span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GadgetHub</span></h2>
+      <p class="section-subtitle" style="text-align:center; margin-left:auto; margin-right:auto;">Saksikan bagaimana kami berkomitmen untuk memberikan pengalaman belanja smartphone terbaik untukmu.</p>
+    </div>
+
+    <div class="video-wrap animate-in delay-2">
+      <!-- 
+        UNTUK MENGGANTI VIDEO:
+        Hapus div video-placeholder dan ganti dengan:
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+        
+        Atau untuk video lokal:
+        <video controls poster="thumbnail.jpg">
+          <source src="iklan-gadgethub.mp4" type="video/mp4">
+        </video>
+      -->
+      <div class="video-placeholder" id="video-placeholder">
+        <div class="play-btn" onclick="playVideo()" title="Play Video">▶</div>
+        <h3>GadgetHub — Company Profile 2024</h3>
+        <p>Klik untuk menonton video profil perusahaan kami</p>
+        <p style="font-size:0.75rem; color:var(--text3); margin-top:4px;">Atau ganti URL YouTube di file index.html untuk menampilkan video asli</p>
+      </div>
+    </div>
+
+    <div class="video-cta animate-in delay-3">
+      <a href="products.html" class="btn btn-primary btn-lg">🛍️ Belanja Sekarang</a>
+      <a href="#contact" class="btn btn-ghost btn-lg">📞 Hubungi Kami</a>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div style="text-align:center; max-width:600px; margin:0 auto 56px;">
+    <div class="section-label">Nilai Kami</div>
+    <h2 class="section-title">Mengapa Memilih GadgetHub?</h2>
+    <p class="section-subtitle" style="margin:12px auto 0;">Kami bukan sekadar toko online biasa. Kami adalah partner teknologimu yang bisa dipercaya.</p>
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card animate-in">
+      <span class="value-icon">🏅</span>
+      <h3 class="value-title">Produk 100% Original</h3>
+      <p class="value-desc">Semua produk yang kami jual dijamin original dengan garansi resmi. Kami tidak pernah menjual barang replika atau refurbished tanpa sepengetahuan pelanggan.</p>
+    </div>
+    <div class="value-card animate-in delay-1">
+      <span class="value-icon">💰</span>
+      <h3 class="value-title">Harga Terbaik & Transparan</h3>
+      <p class="value-desc">Harga yang kami tawarkan sudah termasuk semua biaya. Tidak ada biaya tersembunyi. Kami rutin melakukan survey harga pasar untuk memastikan harga terkompetitif.</p>
+    </div>
+    <div class="value-card animate-in delay-2">
+      <span class="value-icon">⚡</span>
+      <h3 class="value-title">Layanan Cepat & Responsif</h3>
+      <p class="value-desc">Tim kami siap merespons pertanyaan dan pesananmu dalam waktu kurang dari 5 menit di jam operasional. Chat WhatsApp aktif dari pukul 08.00 - 22.00 WIB.</p>
+    </div>
+    <div class="value-card animate-in">
+      <span class="value-icon">🛡️</span>
+      <h3 class="value-title">Transaksi Aman & Terpercaya</h3>
+      <p class="value-desc">Sudah melayani lebih dari 10.000 pelanggan dengan tingkat kepuasan 98%. Proses transaksi aman dengan bukti pembayaran dan resi pengiriman yang transparan.</p>
+    </div>
+    <div class="value-card animate-in delay-1">
+      <span class="value-icon">🚀</span>
+      <h3 class="value-title">Pengiriman Ke Seluruh Indonesia</h3>
+      <p class="value-desc">Bekerja sama dengan JNE, J&T, SiCepat, dan GoSend untuk memastikan produkmu tiba dengan aman dan tepat waktu ke seluruh penjuru nusantara.</p>
+    </div>
+    <div class="value-card animate-in delay-2">
+      <span class="value-icon">🔧</span>
+      <h3 class="value-title">After-Sales Support</h3>
+      <p class="value-desc">Hubungan kami dengan pelanggan tidak berakhir setelah transaksi. Kami membantu proses klaim garansi, konsultasi perangkat, dan rekomendasi aksesoris.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner animate-in">
+    <h2>Siap Temukan Smartphone<br>Impianmu?</h2>
+    <p>Jelajahi ratusan produk pilihan dengan harga terbaik dan garansi resmi. Order mudah via WhatsApp!</p>
+    <div class="cta-actions">
+      <a href="products.html" class="btn btn-primary btn-lg">🛍️ Lihat Semua Produk</a>
+      <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-success btn-lg">💬 Chat WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="margin-bottom:0">
+        <div class="logo-icon">📱</div>
+        Gadget<span>Hub</span>
+      </a>
+      <p>Marketplace smartphone premium terpercaya di Indonesia. Hadirkan teknologi terbaik ke tanganmu dengan harga kompetitif dan layanan bintang lima.</p>
+      <div style="display:flex; gap:8px; margin-top:16px;">
+        <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-success btn-sm">💬 WhatsApp</a>
+        <a href="#" class="btn btn-ghost btn-sm">📸 Instagram</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigasi</h4>
+      <a href="index.html">Beranda</a>
+      <a href="products.html">Produk</a>
+      <a href="#about">Tentang Kami</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="products.html">Apple iPhone</a>
+      <a href="products.html">Samsung Galaxy</a>
+      <a href="products.html">Xiaomi</a>
+      <a href="products.html">OPPO & Vivo</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <a href="#">📍 Jakarta, Indonesia</a>
+      <a href="https://wa.me/6281234567890" target="_blank">💬 WA: 0812-3456-7890</a>
+      <a href="mailto:hello@gadgethub.id">📧 hello@gadgethub.id</a>
+      <a href="#">🕐 08.00 - 22.00 WIB</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 GadgetHub. All rights reserved.</span>
+    <span>Made with ❤️ in Indonesia</span>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="modal-login">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="auth-modal-title">Masuk ke GadgetHub</h2>
+      <button class="modal-close" onclick="closeModal('modal-login')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex; gap:8px; margin-bottom:24px; background:var(--surface2); padding:4px; border-radius:var(--radius-sm);">
+        <button class="btn" id="tab-login" onclick="switchTab('login')" style="flex:1;justify-content:center;background:var(--surface3);color:var(--text);padding:10px;">Masuk</button>
+        <button class="btn" id="tab-register" onclick="switchTab('register')" style="flex:1;justify-content:center;background:transparent;color:var(--text2);padding:10px;">Daftar</button>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="login-email" class="form-input" placeholder="email@kamu.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Masuk →</button>
+        <div style="margin-top:16px; padding:12px; background:var(--surface2); border-radius:var(--radius-sm); font-size:0.8rem; color:var(--text2);">
+          <strong style="color:var(--text);">Demo akun:</strong><br>
+          👑 Admin: admin@gadgethub.id / admin123<br>
+          👤 User: budi@email.com / user123
+        </div>
+      </form>
+
+      <!-- REGISTER -->
+      <form id="register-form" style="display:none">
+        <div class="form-group">
+          <label class="form-label">Nama Lengkap</label>
+          <input type="text" id="reg-name" class="form-input" placeholder="Nama Lengkap" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="email@kamu.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="Min. 6 karakter" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Buat Akun →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<script src="app.js"></script>
+<script>
+  function toggleDropdown() {
+    document.getElementById('user-dropdown').classList.toggle('open');
+  }
+
+  function switchTab(tab) {
+    const loginForm = document.getElementById('login-form');
+    const regForm = document.getElementById('register-form');
+    const tabLogin = document.getElementById('tab-login');
+    const tabReg = document.getElementById('tab-register');
+    const title = document.getElementById('auth-modal-title');
+
+    if (tab === 'login') {
+      loginForm.style.display = '';
+      regForm.style.display = 'none';
+      tabLogin.style.background = 'var(--surface3)';
+      tabLogin.style.color = 'var(--text)';
+      tabReg.style.background = 'transparent';
+      tabReg.style.color = 'var(--text2)';
+      title.textContent = 'Masuk ke GadgetHub';
+    } else {
+      loginForm.style.display = 'none';
+      regForm.style.display = '';
+      tabReg.style.background = 'var(--surface3)';
+      tabReg.style.color = 'var(--text)';
+      tabLogin.style.background = 'transparent';
+      tabLogin.style.color = 'var(--text2)';
+      title.textContent = 'Buat Akun Baru';
+    }
+  }
+
+  function playVideo() {
+    // Ganti dengan URL YouTube embed video Anda
+    const youtubeId = 'dQw4w9WgXcQ'; // Contoh - ganti dengan video ID asli
+    const placeholder = document.getElementById('video-placeholder');
+    const wrap = placeholder.parentElement;
+    placeholder.remove();
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+    iframe.allow = 'autoplay; fullscreen';
+    iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+    wrap.appendChild(iframe);
+  }
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('animate-in'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.value-card, .about-content, .about-visual, .video-container > *').forEach(el => {
+    if (!el.classList.contains('animate-in')) observer.observe(el);
+  });
+</script>
+</body>
+</html>
